@@ -16,7 +16,7 @@ export const formatLargeNumber = (num, decimals = 2) => {
   if (num === undefined || num === null) return "N/A";
 
   const number = Number(num);
-  if (isNaN(number)) return "Некорректное число";
+  if (isNaN(number)) return "Некорректное число.";
 
   const suffixes = [
     {value: 1, name: ""},
