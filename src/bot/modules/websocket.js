@@ -7,7 +7,7 @@ const TEMPORARY_CANDLE = "15m";
 const PRICE_CHANGE_THRESHOLD = 4;
 
 /**
- * Запускаем WebSocket Binance и анализируем данные
+ * Запускаем WebSocket Binance и анализируем данные volk
  */
 
 export const startWebSocket = async (bot) => {
