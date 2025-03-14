@@ -3,8 +3,8 @@ import {fetchFuturesSymbols} from "../../services/binanceApi.js";
 import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/handleCoinPriceRequest.js";
 
 const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${streams}`;
-const TEMPORARY_CANDLE = "5m";
-const PRICE_CHANGE_THRESHOLD = 3;
+const TEMPORARY_CANDLE = "15m";
+const PRICE_CHANGE_THRESHOLD = 4;
 
 /**
  * Запускаем WebSocket Binance и анализируем данные
