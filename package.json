@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "deploy": "git pull && npm i && npm start"
+    "restart": "pm2 stop tradeBot && pm2 delete tradeBot && pm2 start tradeBot",
+    "deploy": "git pull && npm install && npm run restart"
   },
   "type": "module",
   "keywords": [],
