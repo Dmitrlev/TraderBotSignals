@@ -7,7 +7,7 @@ const TEMPORARY_CANDLE = "15m";
 const PRICE_CHANGE_THRESHOLD = 4;
 
 /**
- * Запускаем WebSocket Binance и анализируем данные davey
+ * Запускаем WebSocket Binance и анализируем данные
  */
 
 export const startWebSocket = async (bot) => {
