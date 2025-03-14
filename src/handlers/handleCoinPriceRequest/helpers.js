@@ -26,7 +26,7 @@ export const formatLargeNumber = (num, decimals = 2) => {
     {value: 1e12, name: "трлн"}
   ];
 
-  const tier = suffixes.findLast(s => Math.abs(number) >= s.value) || suffixes[0];
+  const tier = suffixes?.findLast(s => Math.abs(number) >= s.value) || suffixes[0];
 
   const scaled = (number / tier.value).toFixed(decimals).replace(/\.?0+$/, "");
   return `${scaled} ${tier.name}`;
