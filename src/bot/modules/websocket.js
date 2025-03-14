@@ -4,7 +4,7 @@ import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/hand
 
 const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${streams}`;
 const TEMPORARY_CANDLE = "15m";
-const PRICE_CHANGE_THRESHOLD = 4;
+const PRICE_CHANGE_THRESHOLD = 2;
 
 /**
  * Запускаем WebSocket Binance и анализируем данные
@@ -52,8 +52,6 @@ export const startWebSocket = async (bot) => {
 
     const absChange = Math.abs(percentChange);
     const lastChange = priceHistory[symbol] || 0;
-
-    // console.log(absChange)
 
     if (absChange >= PRICE_CHANGE_THRESHOLD && absChange >= lastChange + PRICE_CHANGE_THRESHOLD) {
       console.log(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${TEMPORARY_CANDLE}.`);
