@@ -12,17 +12,14 @@ const timeframes = [
 
 const generateButtons = (coinSymbol) => {
   return timeframes.map(({ label, interval, limit }) =>
-    Markup.button.callback(
-      label,
-      "update_card",
-    )
+      Markup.button.callback(
+          label,
+          `update_${coinSymbol}_${interval}_${limit}`,
+      )
   );
 };
 
-// [Markup.button.callback("🔄 Обновить", `update_${coinSymbol}`)],
-
 export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
-
   if (!chat_id) {
     console.error("❌ Ошибка: chat_id не найден");
     return;
@@ -47,15 +44,13 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
       limit: 60,
     };
 
-    console.log(candlestickParams)
-
     const resCandlestick = await getCandlestickData(candlestickParams);
 
     if (!spotData && !futuresData) {
       return await ctx.telegram.sendMessage(
-        chat_id,
-        `⚠️ Монета *${coinSymbol}* не найдена ни на SPOT, ни на FUTURES Binance.`,
-        { parse_mode: "Markdown" }
+          chat_id,
+          `⚠️ Монета *${coinSymbol}* не найдена ни на SPOT, ни на FUTURES Binance.`,
+          { parse_mode: "Markdown" }
       );
     }
 
@@ -72,8 +67,62 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
     await ctx.telegram.sendMessage(
-      chat_id,
-      `❌ Ошибка при запросе данных для ${symbol.toUpperCase()}.`
+        chat_id,
+        `❌ Ошибка при запросе данных для ${symbol.toUpperCase()}.`
     );
+  }
+};
+
+// Обработчик для callback-запросов
+export const handleUpdateCallback = async (ctx) => {
+  const callbackData = ctx.update.callback_query.data;
+  const [action, coinSymbol, interval, limit] = callbackData.split('_');
+
+  if (action === 'update') {
+    try {
+      const chat_id = ctx.update.callback_query.message.chat.id;
+
+      const [spotData, futuresData] = await Promise.all([
+        getBinanceSpotPrice(coinSymbol),
+        getBinanceFuturesPrice(coinSymbol),
+      ]);
+
+      const candlestickParams = {
+        symbol: `${coinSymbol}USDT`,
+        interval: interval,
+        limit: parseInt(limit),
+      };
+
+      const resCandlestick = await getCandlestickData(candlestickParams);
+
+      if (!spotData && !futuresData) {
+        return await ctx.telegram.sendMessage(
+            chat_id,
+            `⚠️ Монета *${coinSymbol}* не найдена ни на SPOT, ни на FUTURES Binance.`,
+            { parse_mode: "Markdown" }
+        );
+      }
+
+      const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
+      const chartUrl = await generateChartURL(resCandlestick);
+
+      const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
+
+      // Редактируем существующее сообщение с новыми данными
+      await ctx.editMessageMedia(
+          { type: 'photo', media: chartUrl },
+          {
+            caption: message,
+            parse_mode: "MarkdownV2",
+            ...buttons,
+          }
+      );
+    } catch (error) {
+      console.error("Ошибка при обновлении данных:", error);
+      await ctx.telegram.sendMessage(
+          chat_id,
+          `❌ Ошибка при обновлении данных для ${coinSymbol}.`
+      );
+    }
   }
 };
