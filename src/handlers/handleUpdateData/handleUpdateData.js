@@ -21,8 +21,8 @@ export const handleUpdateCallback = async (ctx) => {
 
             const candlestickParams = {
                 symbol: `${coinSymbol}USDT`,
-                interval: interval,
-                limit: parseInt(limit),
+                interval: "5m",
+                limit: 60,
             };
 
             const resCandlestick = await getCandlestickData(candlestickParams);
