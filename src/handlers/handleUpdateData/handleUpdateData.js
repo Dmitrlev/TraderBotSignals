@@ -3,33 +3,33 @@ import {getError} from "../utils/getError.js";
 import {getUndefinedCoinNotification} from "../utils/getUndefinedCoinNotification.js";
 import {getSendData} from "../utils/getSendData.js";
 
-export const handleUpdateCallback = async (ctx) => {
-    const callbackData = ctx.update.callback_query.data;
+export const handleUpdateCallback = async (context) => {
+    const callbackData = context.update.callback_query.data;
     const [action, coinSymbol] = callbackData.split('_');
 
     if (action === 'update') {
         try {
-            await ctx.answerCbQuery("🔄 Обновляем данные ...");
+            await context.answerCbQuery("🔄 Обновляем данные ...");
 
             const [spotData, futuresData] = await getPrice(coinSymbol);
 
             if (!spotData && !futuresData) {
-                return await getUndefinedCoinNotification(ctx, coinSymbol);
+                return await getUndefinedCoinNotification(context, coinSymbol);
             }
 
             const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData);
 
-            await ctx.editMessageMedia({
+            await context.editMessageMedia({
                 type: 'photo',
                 media: chartUrl,
             });
-            await ctx.editMessageCaption(message, {
+            await context.editMessageCaption(message, {
                 parse_mode: "MarkdownV2",
                 reply_markup: buttons.reply_markup,
             });
 
         } catch (error) {
-            await getError(ctx, coinSymbol, error);
+            await getError(context, coinSymbol, error);
         }
     }
 };

@@ -7,13 +7,13 @@ export const actions = {
 };
 
 export const setupActions = (bot) => {
-  bot.action(/^update_(.+)$/, async (ctx) => {
+  bot.action(/^update_(.+)$/, async (context) => {
     try {
-      await ctx.answerCbQuery("🔄 Обновляем данные...");
-      await handleUpdateCallback(ctx);
+      await context.answerCbQuery("🔄 Обновляем данные...");
+      await handleUpdateCallback(context);
     } catch (error) {
       console.error("Ошибка при обновлении:", error);
-      await ctx.reply("❌ Ошибка при обновлении данных.");
+      await context.reply("❌ Ошибка при обновлении данных.");
     }
   });
 };

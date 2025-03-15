@@ -1,3 +1,3 @@
-export const startCommand = (ctx) => {
-  ctx.reply('Привет! Я твой бот. Используй `$команда` для выполнения действий.');
+export const startCommand = (context) => {
+  context.reply('Привет! Я твой бот. Используй `$команда` для выполнения действий.');
 };

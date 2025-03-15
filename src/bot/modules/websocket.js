@@ -50,8 +50,6 @@ export const startWebSocket = async (bot) => {
     const absChange = Math.abs(percentChange);
     const lastChange = priceHistory[symbol] || 0;
 
-    // absChange >= SETTINGS.handler.priceChangeThreshold > 2 && console.log(symbol,  absChange >= SETTINGS.handler.priceChangeThreshold);
-
     if (
         absChange >= SETTINGS.handler.priceChangeThreshold
         && absChange >= lastChange + SETTINGS.handler.priceChangeThreshold
@@ -79,12 +77,9 @@ export const startWebSocket = async (bot) => {
     const ws = new WebSocket(wsUrl);
 
     const handleMessage = (message) => {
-      // console.log(`📩 Получено сообщение от Binance: ${message.slice(0, 50)}...`);
-
       try {
         const data = JSON.parse(message);
         if (data?.data?.k) {
-          // console.log(data?.data?.k)
           processCandle(data.data.s.toLowerCase(), data.data.k);
         }
       } catch (error) {

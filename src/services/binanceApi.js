@@ -25,7 +25,6 @@ export async function getBinanceSpotPrice(symbol) {
 
 export async function getCandlestickData(params) {
 
-  console.log(params)
   try {
     const response = await axios.get(`https://api.binance.com/api/v3/klines`, {params});
 
