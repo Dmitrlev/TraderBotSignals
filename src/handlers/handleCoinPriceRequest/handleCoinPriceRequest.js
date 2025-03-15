@@ -81,6 +81,10 @@ export const handleUpdateCallback = async (ctx) => {
     try {
       const chat_id = ctx.update.callback_query.message.chat.id;
 
+      // Уведомляем пользователя о начале обновления
+      await ctx.answerCbQuery("🔄 Обновляем данные...");
+
+      // Получаем новые данные
       const [spotData, futuresData] = await Promise.all([
         getBinanceSpotPrice(coinSymbol),
         getBinanceFuturesPrice(coinSymbol),
@@ -94,6 +98,7 @@ export const handleUpdateCallback = async (ctx) => {
 
       const resCandlestick = await getCandlestickData(candlestickParams);
 
+      // Если данные не найдены
       if (!spotData && !futuresData) {
         return await ctx.telegram.sendMessage(
             chat_id,
@@ -102,12 +107,14 @@ export const handleUpdateCallback = async (ctx) => {
         );
       }
 
+      // Формируем текст и график
       const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
       const chartUrl = await generateChartURL(resCandlestick);
 
+      // Генерируем кнопки
       const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
-      // Редактируем существующее сообщение с новыми данными
+      // Редактируем существующее сообщение
       await ctx.editMessageMedia(
           {
             type: 'photo',
@@ -121,10 +128,7 @@ export const handleUpdateCallback = async (ctx) => {
       );
     } catch (error) {
       console.error("Ошибка при обновлении данных:", error);
-      await ctx.telegram.sendMessage(
-          chat_id,
-          `❌ Ошибка при обновлении данных для ${coinSymbol}.`
-      );
+      await ctx.answerCbQuery("❌ Ошибка при обновлении данных.");
     }
   }
 };
