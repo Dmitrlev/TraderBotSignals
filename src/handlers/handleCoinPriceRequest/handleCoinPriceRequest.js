@@ -25,14 +25,14 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
 
     const [spotData, futuresData] = await getPrice(coinSymbol);
 
-    const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
-
     if (!spotData && !futuresData) {
       return await getUndefinedCoinNotification(ctx, coinSymbol);
     }
 
-    const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
+    const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
+
     const chartUrl = await generateChartURL(resCandlestick);
+    const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
 
     const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
