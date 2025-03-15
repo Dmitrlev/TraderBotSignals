@@ -5,6 +5,6 @@ export const SETTINGS = {
   },
   handler: {
     temporaryCandle: '15m',
-    priceChangeThreshold: 3,
+    priceChangeThreshold: 4,
   },
 }
