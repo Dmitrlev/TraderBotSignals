@@ -13,7 +13,7 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
 
   try {
     if (!coinSymbol) return;
-    await ctx.telegram.sendChatAction(chat_id, "typing");
+    await ctx.telegram.sendChatAction(chat_id, "нулоывлмы");
 
     if (ctx?.message?.message_id) {
       await ctx.deleteMessage(ctx.message.message_id);
