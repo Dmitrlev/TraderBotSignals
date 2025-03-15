@@ -15,8 +15,8 @@ export const getSendData = async (coinSymbol, spotData, futuresData, changePrice
         generateButtons(coinSymbol),
         [
           Markup.button.url(
-            'На бинанс ->',
-            `http://docs.prime-auto.by/coin=${coinSymbol}USDT`
+            'Binance 🍌',
+            `http://docs.prime-auto.by/?coin=${coinSymbol}USDT`
           )
         ]]
     );
