@@ -4,7 +4,7 @@ export const SETTINGS = {
     limit: 60,
   },
   handler: {
-    temporaryCandle: '15m',
+    temporaryCandle: '30m',
     priceChangeThreshold: 5,
   },
 }
