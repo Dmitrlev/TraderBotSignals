@@ -1,6 +1,6 @@
 import {
   handleUpdateCallback
-} from "../../../handlers/handleUpdateData/handleUpdateData.js";
+} from "../../../handlers/handleUpdateData/handleUpdateData.ts";
 
 export const actions = {
   update_: handleUpdateCallback,

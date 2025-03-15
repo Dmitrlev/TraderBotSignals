@@ -1,10 +1,11 @@
 import {generateChartURL} from "./generateCandlestickChart.js";
 import {formatCoinResponse} from "./formatResponse.js";
-import {getBinanceFuturesPrice, getBinanceSpotPrice, getCandlestickData} from "../../services/binanceApi.js";
+import {getCandlestickData} from "../../services/binanceApi.js";
 import {Markup} from "telegraf";
 import {generateButtons} from "../utils/generateButtons.js";
 import {candlestickParams} from "../constants/candlestick.js";
 import {getPrice} from "../utils/getPrice.js";
+import {getError} from "../utils/getError.js";
 
 export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   if (!chat_id) {
@@ -12,8 +13,9 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
     return;
   }
 
+  const coinSymbol = symbol?.toUpperCase();
+
   try {
-    const coinSymbol = symbol?.toUpperCase();
     if (!coinSymbol) return;
 
     if (ctx?.message?.message_id) {
@@ -43,10 +45,6 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
       ...buttons,
     });
   } catch (error) {
-    console.error("Ошибка при получении данных:", error);
-    await ctx.telegram.sendMessage(
-        chat_id,
-        `❌ Ошибка при запросе данных для ${symbol.toUpperCase()}.`
-    );
+    await getError(ctx, coinSymbol, error);
   }
 };

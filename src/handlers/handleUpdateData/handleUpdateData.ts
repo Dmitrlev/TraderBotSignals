@@ -1,14 +1,15 @@
-import {getBinanceFuturesPrice, getBinanceSpotPrice, getCandlestickData} from "../../services/binanceApi.js";
+import {getCandlestickData} from "../../services/binanceApi.js";
 import {formatCoinResponse} from "../handleCoinPriceRequest/formatResponse.js";
 import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickChart.js";
 import {Markup} from "telegraf";
 import {generateButtons} from "../utils/generateButtons.js";
 import {candlestickParams} from "../constants/candlestick.js";
 import {getPrice} from "../utils/getPrice.js";
+import {getError} from "../utils/getError.js";
 
-export const handleUpdateCallback = async (ctx) => {
+export const handleUpdateCallback = async (ctx: any) => {
     const callbackData = ctx.update.callback_query.data;
-    const [action, coinSymbol, interval, limit] = callbackData.split('_');
+    const [action, coinSymbol] = callbackData.split('_');
 
     if (action === 'update') {
         try {
@@ -43,8 +44,7 @@ export const handleUpdateCallback = async (ctx) => {
             });
 
         } catch (error) {
-            console.error("Ошибка при обновлении данных:", error);
-            await ctx.answerCbQuery("❌ Ошибка при обновлении данных.");
+            getError(ctx, coinSymbol, error);
         }
     }
 };
