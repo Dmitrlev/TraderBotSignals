@@ -1,12 +1,7 @@
-import {generateChartURL} from "./generateCandlestickChart.js";
-import {formatCoinResponse} from "./formatResponse.js";
-import {getCandlestickData} from "../../services/binanceApi.js";
-import {Markup} from "telegraf";
-import {generateButtons} from "../utils/generateButtons.js";
-import {candlestickParams} from "../constants/candlestick.js";
 import {getPrice} from "../utils/getPrice.js";
 import {getError} from "../utils/getError.js";
 import {getUndefinedCoinNotification} from "../utils/getUndefinedCoinNotification.js";
+import {getSendData} from "../utils/getSendData.js";
 
 export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   if (!chat_id) {
@@ -29,12 +24,7 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
       return await getUndefinedCoinNotification(ctx, coinSymbol);
     }
 
-    const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
-
-    const chartUrl = await generateChartURL(resCandlestick);
-    const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
-
-    const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
+    const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData);
 
     await ctx.telegram.sendPhoto(chat_id, chartUrl, {
       caption: message,
