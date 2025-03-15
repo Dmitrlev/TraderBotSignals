@@ -1,11 +1,7 @@
-import {getCandlestickData} from "../../services/binanceApi.js";
-import {formatCoinResponse} from "../handleCoinPriceRequest/formatResponse.js";
-import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickChart.js";
-import {Markup} from "telegraf";
-import {generateButtons} from "../utils/generateButtons.js";
-import {candlestickParams} from "../constants/candlestick.js";
 import {getPrice} from "../utils/getPrice.js";
 import {getError} from "../utils/getError.js";
+import {getUndefinedCoinNotification} from "../utils/getUndefinedCoinNotification.js";
+import {getSendData} from "../utils/getSendData.js";
 
 export const handleUpdateCallback = async (ctx) => {
     const callbackData = ctx.update.callback_query.data;
@@ -13,26 +9,15 @@ export const handleUpdateCallback = async (ctx) => {
 
     if (action === 'update') {
         try {
-            const chat_id = ctx.update.callback_query.message.chat.id;
-
             await ctx.answerCbQuery("🔄 Обновляем данные...");
 
             const [spotData, futuresData] = await getPrice(coinSymbol);
 
-            const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
-
             if (!spotData && !futuresData) {
-                return await ctx.telegram.sendMessage(
-                    chat_id,
-                    `⚠️ Монета *${coinSymbol}* не найдена ни на SPOT, ни на FUTURES Binance.`,
-                    { parse_mode: "Markdown" }
-                );
+                return await getUndefinedCoinNotification(ctx, coinSymbol);
             }
 
-            const message = formatCoinResponse({ coinSymbol, spotData, futuresData });
-            const chartUrl = await generateChartURL(resCandlestick);
-
-            const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
+            const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData);
 
             await ctx.editMessageMedia({
                 type: 'photo',
