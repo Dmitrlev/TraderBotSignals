@@ -115,17 +115,16 @@ export const handleUpdateCallback = async (ctx) => {
       const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
       // Редактируем существующее сообщение
-      await ctx.editMessageMedia(
-          {
-            type: 'photo',
-            media: chartUrl, // Новый график
-          },
-          {
-            caption: message, // Сохраняем текстовые данные
-            parse_mode: "MarkdownV2",
-            reply_markup: buttons.reply_markup, // Сохраняем кнопки
-          }
-      );
+      await ctx.editMessageCaption(message, {
+        parse_mode: "MarkdownV2",
+        reply_markup: buttons.reply_markup,
+      });
+
+      await ctx.editMessageMedia({
+        type: 'photo',
+        media: chartUrl,
+      });
+
     } catch (error) {
       console.error("Ошибка при обновлении данных:", error);
       await ctx.answerCbQuery("❌ Ошибка при обновлении данных.");
