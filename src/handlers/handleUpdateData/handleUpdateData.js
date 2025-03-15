@@ -7,7 +7,7 @@ import {candlestickParams} from "../constants/candlestick.js";
 import {getPrice} from "../utils/getPrice.js";
 import {getError} from "../utils/getError.js";
 
-export const handleUpdateCallback = async (ctx: any) => {
+export const handleUpdateCallback = async (ctx) => {
     const callbackData = ctx.update.callback_query.data;
     const [action, coinSymbol] = callbackData.split('_');
 

@@ -45,6 +45,6 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
       ...buttons,
     });
   } catch (error) {
-    await getError(ctx, coinSymbol, error);
+    getError(ctx, coinSymbol, error);
   }
 };
