@@ -43,7 +43,7 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
 
     const candlestickParams = {
       symbol: `${coinSymbol}USDT`,
-      interval: "15m",
+      interval: "5m",
       limit: 60,
     };
 
