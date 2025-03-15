@@ -49,7 +49,8 @@ export const startWebSocket = async (bot) => {
 
     const absChange = Math.abs(percentChange);
     const lastChange = priceHistory[symbol] || 0;
-    lastChange > 0.3 && console.log(lastChange);
+
+    // absChange >= SETTINGS.handler.priceChangeThreshold > 2 && console.log(symbol,  absChange >= SETTINGS.handler.priceChangeThreshold);
 
     if (
         absChange >= SETTINGS.handler.priceChangeThreshold

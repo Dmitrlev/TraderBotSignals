@@ -19,6 +19,8 @@ export const handleMessage = async (ctx) => {
 
   const currentCommand = map[firstChar]
 
+  console.log(ctx?.chat?.id, content)
+
   if (!currentCommand) return;
   return await currentCommand(ctx, ctx?.chat?.id, content);
 };
