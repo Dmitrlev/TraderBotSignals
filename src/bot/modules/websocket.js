@@ -4,7 +4,7 @@ import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/hand
 
 const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${streams}`;
 const TEMPORARY_CANDLE = "5m";
-const PRICE_CHANGE_THRESHOLD = 2;
+const PRICE_CHANGE_THRESHOLD = 8;
 
 /**
  * Запускаем WebSocket Binance и анализируем данные
