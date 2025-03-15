@@ -1,6 +1,6 @@
 export const getError = (ctx, coinSymbol, error) => {
   ctx.telegram.sendMessage(
-    process.env.BOT_TOKEN,
+    process.env.CHAT_ID,
     `❌ Ошибка при запросе данных для ${coinSymbol}.`,
     error,
   );
