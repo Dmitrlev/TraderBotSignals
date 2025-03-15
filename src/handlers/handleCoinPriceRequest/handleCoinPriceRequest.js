@@ -12,7 +12,6 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   const coinSymbol = symbol?.toUpperCase();
 
   try {
-    ctx.answerCbQuery("🤑🤑🤑 Нужно больше золота...");
     if (!coinSymbol) return;
 
     if (ctx?.message?.message_id) {
