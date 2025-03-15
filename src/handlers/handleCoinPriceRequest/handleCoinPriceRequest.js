@@ -2,22 +2,7 @@ import {generateChartURL} from "./generateCandlestickChart.js";
 import {formatCoinResponse} from "./formatResponse.js";
 import {getBinanceFuturesPrice, getBinanceSpotPrice, getCandlestickData} from "../../services/binanceApi.js";
 import {Markup} from "telegraf";
-
-const timeframes = [
-  {label: "15m", interval: "4h", limit: 100},
-  {label: "4h", interval: "1H", limit: 200},
-  {label: "1H", interval: "1H", limit: 200},
-  {label: "🔄", interval: "15m", limit: 60},
-];
-
-const generateButtons = (coinSymbol) => {
-  return timeframes.map(({ label, interval, limit }) =>
-      Markup.button.callback(
-          label,
-          `update_${coinSymbol}_${interval}_${limit}`,
-      )
-  );
-};
+import {generateButtons} from "../utils/generateButtons.js";
 
 export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   if (!chat_id) {

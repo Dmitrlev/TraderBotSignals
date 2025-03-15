@@ -2,6 +2,7 @@ import {getBinanceFuturesPrice, getBinanceSpotPrice, getCandlestickData} from ".
 import {formatCoinResponse} from "../handleCoinPriceRequest/formatResponse.js";
 import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickChart.js";
 import {Markup} from "telegraf";
+import {generateButtons} from "../utils/generateButtons.js";
 
 export const handleUpdateCallback = async (ctx) => {
     const callbackData = ctx.update.callback_query.data;
