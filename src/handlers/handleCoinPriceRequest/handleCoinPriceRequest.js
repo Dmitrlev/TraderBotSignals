@@ -73,7 +73,6 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   }
 };
 
-// Обработчик для callback-запросов
 export const handleUpdateCallback = async (ctx) => {
   const callbackData = ctx.update.callback_query.data;
   const [action, coinSymbol, interval, limit] = callbackData.split('_');
@@ -110,11 +109,14 @@ export const handleUpdateCallback = async (ctx) => {
 
       // Редактируем существующее сообщение с новыми данными
       await ctx.editMessageMedia(
-          { type: 'photo', media: chartUrl },
+          {
+            type: 'photo',
+            media: chartUrl,
+          },
           {
             caption: message,
             parse_mode: "MarkdownV2",
-            ...buttons,
+            reply_markup: buttons,
           }
       );
     } catch (error) {
