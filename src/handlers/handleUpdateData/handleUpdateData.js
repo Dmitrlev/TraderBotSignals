@@ -3,6 +3,7 @@ import {formatCoinResponse} from "../handleCoinPriceRequest/formatResponse.js";
 import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickChart.js";
 import {Markup} from "telegraf";
 import {generateButtons} from "../utils/generateButtons.js";
+import {candlestickParams} from "../constants/candlestick.js";
 
 export const handleUpdateCallback = async (ctx) => {
     const callbackData = ctx.update.callback_query.data;
@@ -19,13 +20,7 @@ export const handleUpdateCallback = async (ctx) => {
                 getBinanceFuturesPrice(coinSymbol),
             ]);
 
-            const candlestickParams = {
-                symbol: `${coinSymbol}USDT`,
-                interval: interval,
-                limit: parseInt(limit),
-            };
-
-            const resCandlestick = await getCandlestickData(candlestickParams);
+            const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
 
             if (!spotData && !futuresData) {
                 return await ctx.telegram.sendMessage(
