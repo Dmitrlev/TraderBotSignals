@@ -1,10 +1,9 @@
 import WebSocket from "ws";
 import {fetchFuturesSymbols} from "../../services/binanceApi.js";
 import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/handleCoinPriceRequest.js";
+import {SETTINGS} from "../../settings.js";
 
 const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${streams}`;
-const TEMPORARY_CANDLE = "5m";
-const PRICE_CHANGE_THRESHOLD = 8;
 
 /**
  * Запускаем WebSocket Binance и анализируем данные
@@ -15,8 +14,6 @@ export const startWebSocket = async (bot) => {
 
   const symbols = await fetchFuturesSymbols();
   if (symbols.length === 0) return console.error("❌ Список монет пуст, WebSocket не запущен.");
-
-  // const symbolsTest = symbols.slice(0, 1)
 
   const batchSize = 200;
   const batches = [];
@@ -53,14 +50,16 @@ export const startWebSocket = async (bot) => {
     const absChange = Math.abs(percentChange);
     const lastChange = priceHistory[symbol] || 0;
 
-    if (absChange >= PRICE_CHANGE_THRESHOLD && absChange >= lastChange + PRICE_CHANGE_THRESHOLD) {
-      console.log(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${TEMPORARY_CANDLE}.`);
+    if (
+        absChange >= SETTINGS.handler.priceChangeThreshold
+        && absChange >= lastChange + SETTINGS.handler.priceChangeThreshold
+    ) {
+      console.log(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${SETTINGS.handler.temporaryCandle}.`);
 
       if (bot) {
         handleCoinPriceRequest(bot, process.env.CHAT_ID, symbol.slice(0, -4));
       }
 
-      // Обновляем историю изменений
       priceHistory[symbol] = absChange;
     }
   };
@@ -72,7 +71,7 @@ export const startWebSocket = async (bot) => {
   const connectWebSocket = (symbolsBatch, index) => {
     console.log(`🔗 Подключение WebSocket №${index + 1}... (${symbolsBatch.length} монет)`);
 
-    const streams = symbolsBatch.map((s) => `${s.toLowerCase()}@kline_${TEMPORARY_CANDLE}`).join("/");
+    const streams = symbolsBatch.map((s) => `${s.toLowerCase()}@kline_${SETTINGS.handler.temporaryCandle}`).join("/");
 
     const wsUrl = getWsUrl(streams);
     const ws = new WebSocket(wsUrl);
