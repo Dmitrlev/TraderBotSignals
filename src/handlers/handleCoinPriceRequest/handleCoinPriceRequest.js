@@ -115,14 +115,13 @@ export const handleUpdateCallback = async (ctx) => {
       const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
       // Редактируем существующее сообщение
-      await ctx.editMessageCaption(message, {
-        parse_mode: "MarkdownV2",
-        reply_markup: buttons.reply_markup,
-      });
-
       await ctx.editMessageMedia({
         type: 'photo',
         media: chartUrl,
+      });
+      await ctx.editMessageCaption(message, {
+        parse_mode: "MarkdownV2",
+        reply_markup: buttons.reply_markup,
       });
 
     } catch (error) {
