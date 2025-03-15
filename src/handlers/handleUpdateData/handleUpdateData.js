@@ -9,7 +9,7 @@ export const handleUpdateCallback = async (ctx) => {
 
     if (action === 'update') {
         try {
-            await ctx.answerCbQuery("🔄 Обновляем данные...");
+            await ctx.answerCbQuery("🔄 Обновляем данные ...");
 
             const [spotData, futuresData] = await getPrice(coinSymbol);
 
