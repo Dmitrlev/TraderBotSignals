@@ -1,3 +1,5 @@
+import {suffixes} from "../constants/suffixes.js";
+
 export const cleanData = (data) => {
   if (!data || typeof data !== "object") return null;
 
@@ -17,14 +19,6 @@ export const formatLargeNumber = (num, decimals = 2) => {
 
   const number = Number(num);
   if (isNaN(number)) return "Некорректное число";
-
-  const suffixes = [
-    {value: 1, name: ""},
-    {value: 1e3, name: "тыс."},
-    {value: 1e6, name: "млн"},
-    {value: 1e9, name: "млрд"},
-    {value: 1e12, name: "трлн"}
-  ];
 
   const tier = suffixes?.findLast(s => Math.abs(number) >= s.value) || suffixes[0];
 
