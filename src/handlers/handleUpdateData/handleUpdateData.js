@@ -29,7 +29,7 @@ export const handleUpdateCallback = async (ctx) => {
             });
 
         } catch (error) {
-            getError(ctx, coinSymbol, error);
+            await getError(ctx, coinSymbol, error);
         }
     }
 };
