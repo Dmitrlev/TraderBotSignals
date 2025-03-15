@@ -13,7 +13,8 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
 
   try {
     if (!coinSymbol) return;
-    await ctx.telegram.answerCbQuery("🔄 1Обновляем данные...");
+
+    await ctx.reply("Запрашиваем данные...", { disable_notification: true });
 
     if (ctx?.message?.message_id) {
       await ctx.deleteMessage(ctx.message.message_id);
