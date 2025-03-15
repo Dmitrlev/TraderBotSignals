@@ -24,7 +24,7 @@ export const formatCoinResponse = ({coinSymbol, spotData, futuresData, changePri
     : '';
 
   const changePars = (spotChange || futuresChange);
-  const title = `${changePars === 0 ? '⚪️' : (changePars > 0 ? '🟢' : '🔴')} \`*${coinSymbol}*\` \`\\(${changePars}\`%\\)` + '\n';
+  const title = `${changePars === 0 ? '⚪️' : (changePars > 0 ? '🟢' : '🔴')} \`\*${coinSymbol}\*\` \\(${changePars}%\\)` + '\n';
 
   const spot = spotPrice
     ? `🏦 *SP:*  $\`${spotPrice}\`` + '\n'
