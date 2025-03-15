@@ -1,10 +1,10 @@
 export const SETTINGS = {
     candlestick: {
-        interval: '5m',
+        interval: '15m',
         limit: 60,
     },
     handler: {
-        temporaryCandle: '5m',
-        priceChangeThreshold: 8,
+        temporaryCandle: '15m',
+        priceChangeThreshold: 5,
     },
 }
