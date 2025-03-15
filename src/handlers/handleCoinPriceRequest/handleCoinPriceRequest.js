@@ -4,6 +4,7 @@ import {getBinanceFuturesPrice, getBinanceSpotPrice, getCandlestickData} from ".
 import {Markup} from "telegraf";
 import {generateButtons} from "../utils/generateButtons.js";
 import {candlestickParams} from "../constants/candlestick.js";
+import {getPrice} from "../utils/getPrice.js";
 
 export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
   if (!chat_id) {
@@ -19,10 +20,7 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
       await ctx.deleteMessage(ctx.message.message_id);
     }
 
-    const [spotData, futuresData] = await Promise.all([
-      getBinanceSpotPrice(coinSymbol),
-      getBinanceFuturesPrice(coinSymbol),
-    ]);
+    const [spotData, futuresData] = await getPrice(coinSymbol);
 
     const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
 

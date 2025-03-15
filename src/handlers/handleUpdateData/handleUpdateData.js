@@ -4,6 +4,7 @@ import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickCha
 import {Markup} from "telegraf";
 import {generateButtons} from "../utils/generateButtons.js";
 import {candlestickParams} from "../constants/candlestick.js";
+import {getPrice} from "../utils/getPrice.js";
 
 export const handleUpdateCallback = async (ctx) => {
     const callbackData = ctx.update.callback_query.data;
@@ -15,10 +16,7 @@ export const handleUpdateCallback = async (ctx) => {
 
             await ctx.answerCbQuery("🔄 Обновляем данные...");
 
-            const [spotData, futuresData] = await Promise.all([
-                getBinanceSpotPrice(coinSymbol),
-                getBinanceFuturesPrice(coinSymbol),
-            ]);
+            const [spotData, futuresData] = await getPrice(coinSymbol);
 
             const resCandlestick = await getCandlestickData(candlestickParams(coinSymbol));
 
