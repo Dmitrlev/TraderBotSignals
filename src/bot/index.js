@@ -1,5 +1,5 @@
 import {setupCommands} from "./modules/commands/index.js";
-// import {setupActions} from "./modules/actions/index.js";
+import {setupActions} from "./modules/actions/index.js";
 import {handleMessage} from "./modules/messages.js";
 import dotenv from "dotenv";
 import {Telegraf} from "telegraf";
@@ -9,7 +9,7 @@ dotenv.config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 setupCommands(bot);
-// setupActions(bot);
+setupActions(bot);
 
 bot.on("message", handleMessage);
 
