@@ -111,12 +111,12 @@ export const handleUpdateCallback = async (ctx) => {
       await ctx.editMessageMedia(
           {
             type: 'photo',
-            media: chartUrl,
+            media: chartUrl, // Новый график
           },
           {
-            caption: message,
+            caption: message, // Сохраняем текстовые данные
             parse_mode: "MarkdownV2",
-            reply_markup: buttons,
+            reply_markup: buttons.reply_markup, // Сохраняем кнопки
           }
       );
     } catch (error) {
