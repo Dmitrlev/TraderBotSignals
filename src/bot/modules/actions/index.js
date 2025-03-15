@@ -1,5 +1,6 @@
 import {
-  handleUpdateCallback
+    handleCoinPriceRequest,
+    handleUpdateCallback
 } from "../../../handlers/handleCoinPriceRequest/handleCoinPriceRequest.js";
 
 export const actions = {
@@ -9,7 +10,9 @@ export const actions = {
 export const setupActions = (bot) => {
   bot.action(/^update_(.+)$/, async (ctx) => {
     try {
+      const symbol = ctx.match[1];
       await ctx.answerCbQuery("🔄 Обновляем данные...");
+      await handleCoinPriceRequest(ctx, symbol, true);
       await handleUpdateCallback(ctx);
     } catch (error) {
       console.error("Ошибка при обновлении:", error);
