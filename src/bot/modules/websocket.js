@@ -59,7 +59,7 @@ export const startWebSocket = async (bot) => {
       console.log(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${SETTINGS.handler.temporaryCandle}.`);
 
       if (bot) {
-        handleCoinPriceRequest(bot, process.env.CHAT_ID, symbol.slice(0, -4));
+        handleCoinPriceRequest(bot, process.env.CHAT_ID, symbol.slice(0, -4), absChange.toFixed(2));
       }
 
       priceHistory[symbol] = absChange;

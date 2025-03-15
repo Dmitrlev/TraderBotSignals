@@ -6,7 +6,7 @@ export const cleanData = (data) => {
   );
 };
 
-const formatNumber = (value) => {
+export const formatNumber = (value) => {
   if (value === undefined || value === null) return null;
 
   return String(value).replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");

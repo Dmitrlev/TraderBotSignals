@@ -1,6 +1,7 @@
 import {cleanData, formatLargeNumber} from "./helpers.js";
+import {SETTINGS} from "../../settings.js";
 
-export const formatCoinResponse = ({coinSymbol, spotData, futuresData}) => {
+export const formatCoinResponse = ({coinSymbol, spotData, futuresData, changePriceSignal = null}) => {
 
   const {
     price: spotPrice = null,
@@ -18,12 +19,15 @@ export const formatCoinResponse = ({coinSymbol, spotData, futuresData}) => {
     change: futuresChange = null,
   } = cleanData(futuresData) || {};
 
+  const changePriceFinal = changePriceSignal
+    ? `🔥  За последние *${SETTINGS.handler.temporaryCandle}* \`\\(${changePriceSignal}\`%\\)` + '\n'
+    : '';
 
   const changePars = (spotChange || futuresChange);
   const title = `${changePars === 0 ? '⚪️' : (changePars > 0 ? '🟢' : '🔴')} *${coinSymbol}* \`\\(${changePars}\`%\\)` + '\n';
 
   const spot = spotPrice
-    ? `🏦 *SP:*  $\`${spotPrice}\`` + '\n'
+    ? `🏦  *SP:*  $\`${spotPrice}\`` + '\n'
     : '';
 
   const futures =
@@ -41,6 +45,6 @@ export const formatCoinResponse = ({coinSymbol, spotData, futuresData}) => {
     ? `💰  $\`${volumePars}\`` + '\n'
     : '';
 
-  return `${title}\n${spot}${futures}\n${minMax}${volumeFinal}`;
+  return `${changePriceFinal}\n${title}\n${spot}${futures}\n${minMax}${volumeFinal}`;
 };
 
