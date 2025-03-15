@@ -80,6 +80,7 @@ export const handleUpdateCallback = async (ctx) => {
   if (action === 'update') {
     try {
       const chat_id = ctx.update.callback_query.message.chat.id;
+      const message_id = ctx.update.callback_query.message.message_id;
 
       // Уведомляем пользователя о начале обновления
       await ctx.answerCbQuery("🔄 Обновляем данные...");
@@ -114,18 +115,15 @@ export const handleUpdateCallback = async (ctx) => {
       // Генерируем кнопки
       const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
-      // Редактируем существующее сообщение
-      await ctx.editMessageMedia(
-          {
-            type: 'photo',
-            media: chartUrl, // Новый график
-          },
-          {
-            caption: message, // Сохраняем текстовые данные
-            parse_mode: "MarkdownV2",
-            reply_markup: buttons.reply_markup, // Сохраняем кнопки
-          }
-      );
+      // Удаляем старое сообщение
+      await ctx.deleteMessage(message_id);
+
+      // Отправляем новое сообщение с обновленными данными
+      await ctx.telegram.sendPhoto(chat_id, chartUrl, {
+        caption: message,
+        parse_mode: "MarkdownV2",
+        reply_markup: buttons.reply_markup,
+      });
     } catch (error) {
       console.error("Ошибка при обновлении данных:", error);
       await ctx.answerCbQuery("❌ Ошибка при обновлении данных.");
