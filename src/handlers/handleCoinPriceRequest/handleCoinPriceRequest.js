@@ -13,6 +13,7 @@ export const handleCoinPriceRequest = async (ctx, chat_id, symbol) => {
 
   try {
     if (!coinSymbol) return;
+    await ctx.inlineQuery("🔄 1Обновляем данные...");
 
     if (ctx?.message?.message_id) {
       await ctx.deleteMessage(ctx.message.message_id);
