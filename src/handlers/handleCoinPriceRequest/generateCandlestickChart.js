@@ -26,7 +26,7 @@ export async function generateChartURL(rawCandles) {
           up: binanceColors.up,
           down: binanceColors.down,
         },
-        borderColor: 'rgba(0,0,0,0.13)',
+        borderColor: 'rgba(0,0,0,0.22)',
         borderWidth: 0,
       }]
     },
