@@ -1,5 +1,6 @@
 export const COMMANDS = {
     settings: 'settings',
+    short: 's',
 }
 
 export const MESSAGES_TEXT = {
@@ -11,6 +12,7 @@ export const MESSAGES_TEXT = {
     wrongInterval: '❌ Неверный интервал. Допустимые значения:',
     changedPercents: '✅ Порог изменения цены изменен на:',
     wrongPercents: '❌ Введите корректное число.',
+    shortText: '💫 Милсдарь, судьба велит нагнуть этот рынок к земле 🤾‍',
 }
 
 export const BOT_COMMANDS_DATA = {
