@@ -2,11 +2,12 @@ import {setupCommands} from "./modules/commands/index.js";
 import {setupActions} from "./modules/actions/index.js";
 import {handleMessage} from "./modules/messages.js";
 import dotenv from "dotenv";
-import {Telegraf} from "telegraf";
+import {session, Telegraf} from "telegraf";
 import {startWebSocket} from "./modules/websocket.js";
 
 dotenv.config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
+bot.use(session());
 
 setupCommands(bot);
 setupActions(bot);
