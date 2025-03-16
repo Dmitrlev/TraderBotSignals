@@ -25,3 +25,9 @@ export const BOT_COMMANDS_DATA = {
 }
 
 export const VALID_CANDLES = ["1m", "5m", "15m", "1h", "4h", "1d"];
+
+export const COMMANDS_LIST = [
+    { command: "settings", description: "Список настроек" },
+    { command: "s", description: "Идти в шорт" },
+    { command: "l", description: "Идти в лонг" },
+]
