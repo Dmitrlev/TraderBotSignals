@@ -19,6 +19,10 @@ export const shortHandler = (context) => {
     context.reply(`${MESSAGES_TEXT.shortText}`);
 }
 
+export const longHandler = (context) => {
+    context.reply(`${MESSAGES_TEXT.longText}`);
+}
+
 export const handleSetInterval = (context) => {
     const newInterval = context.message.text.trim();
     const validCandles = VALID_CANDLES;

@@ -1,6 +1,7 @@
 export const COMMANDS = {
     settings: 'settings',
     short: 's',
+    long: 'l',
 }
 
 export const MESSAGES_TEXT = {
@@ -13,6 +14,7 @@ export const MESSAGES_TEXT = {
     changedPercents: '✅ Порог изменения цены изменен на:',
     wrongPercents: '❌ Введите корректное число.',
     shortText: '💫 Милсдарь, судьба велит нагнуть этот рынок к земле 🤾‍',
+    longText: '🚀 Брат, летим на марс пока Маск принимает душ 🚀',
 }
 
 export const BOT_COMMANDS_DATA = {
