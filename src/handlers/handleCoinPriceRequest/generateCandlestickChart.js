@@ -14,7 +14,6 @@ export async function generateChartURL(rawCandles) {
     h: parseFloat(c[2]),
     l: parseFloat(c[3]),
     c: parseFloat(c[4]),
-    color: 'rgba(0,74,255,0.8)',
   }));
 
   const chart = new QuickChart();
@@ -26,7 +25,9 @@ export async function generateChartURL(rawCandles) {
         color: {
           up: binanceColors.up,
           down: binanceColors.down,
-        }
+        },
+        borderColor: 'rgba(0,0,0,0.13)',
+        borderWidth: 0,
       }]
     },
     options: {
@@ -47,12 +48,12 @@ export async function generateChartURL(rawCandles) {
           ticks: {
             autoSkip: false,
           },
-        }
+        },
       },
       plugins: {
         legend: {display: false},
-        backgroundColor: binanceColors.backgroundColor
-      }
+      },
+      backgroundColor: binanceColors.backgroundColor,
     },
   });
 

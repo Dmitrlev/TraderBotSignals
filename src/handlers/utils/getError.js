@@ -3,5 +3,7 @@ export const getError = (context, coinSymbol, error) => {
       context.chat.id,
     `❌ Ошибка при запросе данных для ${coinSymbol}.`,
     error,
-  );
+  ).then(() => {
+    console.error(error);
+  });
 }
