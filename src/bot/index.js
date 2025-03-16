@@ -19,8 +19,8 @@ setupCommands(bot);
 setupActions(bot);
 
 bot.on("message", (ctx) => {
-    if (ctx.chat?.id && !SETTINGS.savedChatId) {
-        setChatId(ctx.chat.id);
+    if (ctx?.chat?.id && !SETTINGS?.savedChatId) {
+        setChatId(ctx?.chat?.id);
     }
     return handleMessage(ctx);
 });
