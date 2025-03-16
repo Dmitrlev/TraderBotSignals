@@ -1,9 +1,8 @@
-export const getError = (context, coinSymbol, error) => {
-  context.telegram.sendMessage(
-      context.chat.id,
-    `❌ Ошибка при запросе данных для ${coinSymbol}.`,
-    error,
-  ).then(() => {
-    console.error(error);
-  });
-}
+export const getError = async (context, coinSymbol, error) => {
+  if (!context?.chat?.id) {
+    console.error("Ошибка: context.chat.id не определён", { context, coinSymbol, error });
+    return;
+  }
+
+  await context.reply(`❌ Ошибка при получении данных для ${coinSymbol}: ${error.message}`);
+};

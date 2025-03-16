@@ -5,7 +5,7 @@ import {getSendData} from "../utils/getSendData.js";
 
 export const handleUpdateCallback = async (context) => {
     const callbackData = context.update.callback_query.data;
-    const [action, coinSymbol] = callbackData.split('_');
+    const [action, coinSymbol, interval, limit] = callbackData.split('_');
 
     if (action === 'update') {
         try {
@@ -17,7 +17,7 @@ export const handleUpdateCallback = async (context) => {
                 return await getUndefinedCoinNotification(context, coinSymbol);
             }
 
-            const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData);
+            const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData, interval, limit);
 
             await context.editMessageMedia({
                 type: 'photo',
