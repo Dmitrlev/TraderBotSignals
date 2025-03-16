@@ -49,7 +49,11 @@ export async function generateChartURL(rawCandles) {
       scales: {
         x: {
           grid: { color: chartColors.gridColor },
-          ticks: { color: chartColors.textColor, autoSkip: false },
+          ticks: {
+            color: chartColors.textColor,
+            autoSkip: true,
+            maxTicksLimit: 6
+          },
           time: {
             unit: "hour",
             stepSize: 6,
