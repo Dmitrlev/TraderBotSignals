@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import {session, Telegraf} from "telegraf";
 import {startWebSocket} from "./modules/websocket.js";
 import {COMMANDS_LIST, MESSAGES_TEXT} from "./modules/commands/constants.js";
+import {setChatId, SETTINGS} from "../settings.js";
 
 dotenv.config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -17,7 +18,12 @@ bot.telegram.setMyCommands(COMMANDS_LIST)
 setupCommands(bot);
 setupActions(bot);
 
-bot.on("message", handleMessage);
+bot.on("message", (ctx) => {
+    if (ctx.chat?.id && !SETTINGS.savedChatId) {
+        setChatId(ctx.chat.id);
+    }
+    return handleMessage(ctx);
+});
 
 startWebSocket(bot)
   .then(() => console.info(MESSAGES_TEXT.websocketSuccessStart))

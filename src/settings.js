@@ -21,6 +21,12 @@ const saveSettings = (settings) => {
   }
 };
 
+const setChatId = (chatId) => {
+  const settings = loadSettings();
+  settings.savedChatId = chatId;
+  saveSettings(settings);
+};
+
 const SETTINGS = loadSettings();
 
-export { SETTINGS, saveSettings };
+export { SETTINGS, saveSettings, setChatId };

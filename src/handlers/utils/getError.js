@@ -1,8 +1,8 @@
-export const getError = async (context, coinSymbol, error) => {
-  if (!context?.chat?.id) {
-    console.error("Ошибка: context.chat.id не определён", { context, coinSymbol, error });
+export const getError = async (context, chat_id, coinSymbol, error) => {
+  if (!chat_id) {
+    console.error("Ошибка: chat_id не определён", { chat_id, coinSymbol, error });
     return;
   }
 
-  await context.reply(`❌ Ошибка при получении данных для ${coinSymbol}: ${error.message}`);
+  console.error(`❌ Ошибка при получении данных для ${coinSymbol}: ${error.message}`);
 };

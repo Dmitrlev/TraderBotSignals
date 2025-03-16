@@ -30,7 +30,7 @@ export const handleCoinPriceRequest = async (context, chat_id, symbol, changePri
       return;
     }
 
-    const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData, changePriceSignal);
+    const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData);
 
     await context.telegram.sendPhoto(chat_id, chartUrl, {
       caption: message,
@@ -38,6 +38,6 @@ export const handleCoinPriceRequest = async (context, chat_id, symbol, changePri
       ...buttons,
     });
   } catch (error) {
-    await getError(context, coinSymbol, error);
+    await getError(context, chat_id, coinSymbol, error);
   }
 };

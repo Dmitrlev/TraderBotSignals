@@ -4,7 +4,7 @@ import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/hand
 import {SETTINGS} from "../../settings.js";
 
 const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${streams}`;
-
+const savedChatId = SETTINGS.savedChatId;
 /**
  * Запускаем WebSocket Binance и анализируем данные
  */
@@ -57,7 +57,7 @@ export const startWebSocket = async (bot) => {
       console.info(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${SETTINGS.handler.temporaryCandle}.`);
 
       if (bot) {
-        handleCoinPriceRequest(bot, process.env.CHAT_ID, symbol.slice(0, -4), absChange.toFixed(2));
+        handleCoinPriceRequest(bot, savedChatId, symbol.slice(0, -4), absChange.toFixed(2));
       }
 
       priceHistory[symbol] = absChange;
