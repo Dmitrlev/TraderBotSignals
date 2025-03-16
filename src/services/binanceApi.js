@@ -57,11 +57,11 @@ export async function getBinanceFuturesPrice(symbol) {
 }
 
 export const fetchFuturesSymbols = async () => {
-  console.log("📡 Запрос списка фьючерсных монет...");
+  console.info("📡 Запрос списка фьючерсных монет...");
   try {
     const response = await axios.get("https://fapi.binance.com/fapi/v1/exchangeInfo");
     const symbols = response?.data?.symbols?.map(s => s?.symbol?.toLowerCase());
-    console.log(`✅ Найдено ${symbols.length} монет.`);
+    console.info(`✅ Найдено ${symbols.length} монет.`);
     return symbols;
   } catch (error) {
     console.error("❌ Ошибка при получении списка монет:", error);

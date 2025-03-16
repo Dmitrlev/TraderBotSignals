@@ -10,7 +10,7 @@ const getWsUrl = (streams) => `wss://fstream.binance.com/stream?streams=${stream
  */
 
 export const startWebSocket = async (bot) => {
-  console.log("Старт WebSocket Binance...");
+  console.info("Старт WebSocket Binance...");
 
   const symbols = await fetchFuturesSymbols();
   if (symbols.length === 0) return console.error("❌ Список монет пуст, WebSocket не запущен.");
@@ -22,7 +22,7 @@ export const startWebSocket = async (bot) => {
     batches.push(symbols.slice(i, i + batchSize));
   }
 
-  console.log(`📦 Разбито на ${batches.length} пакетов по ${batchSize} монет.`);
+  console.info(`📦 Разбито на ${batches.length} пакетов по ${batchSize} монет.`);
 
   /**
    * Обработка свечей и логика изменения цены
@@ -54,7 +54,7 @@ export const startWebSocket = async (bot) => {
         absChange >= SETTINGS.handler.priceChangeThreshold
         && absChange >= lastChange + SETTINGS.handler.priceChangeThreshold
     ) {
-      console.log(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${SETTINGS.handler.temporaryCandle}.`);
+      console.info(`🚀 [ALERT] ${symbol.toUpperCase()} ${direction} на ${absChange.toFixed(2)}% за ${SETTINGS.handler.temporaryCandle}.`);
 
       if (bot) {
         handleCoinPriceRequest(bot, process.env.CHAT_ID, symbol.slice(0, -4), absChange.toFixed(2));
@@ -69,7 +69,7 @@ export const startWebSocket = async (bot) => {
    */
 
   const connectWebSocket = (symbolsBatch, index) => {
-    console.log(`🔗 Подключение WebSocket №${index + 1}... (${symbolsBatch.length} монет)`);
+    console.info(`🔗 Подключение WebSocket №${index + 1}... (${symbolsBatch.length} монет)`);
 
     const streams = symbolsBatch.map((s) => `${s.toLowerCase()}@kline_${SETTINGS.handler.temporaryCandle}`).join("/");
 
@@ -88,11 +88,11 @@ export const startWebSocket = async (bot) => {
     }
 
     const handleClose = (index, symbolsBatch) => {
-      console.log(`🔄 WebSocket ${index + 1} закрылся. Перезапуск через 5 секунд...`);
+      console.info(`🔄 WebSocket ${index + 1} закрылся. Перезапуск через 5 секунд...`);
       setTimeout(() => connectWebSocket(symbolsBatch, index), 5000);
     }
 
-    ws.addEventListener("open", () => console.log(`✅ WebSocket ${index + 1} на ${symbolsBatch.length} монет открыт.`));
+    ws.addEventListener("open", () => console.info(`✅ WebSocket ${index + 1} на ${symbolsBatch.length} монет открыт.`));
     ws.addEventListener("error", (error) => console.error(`❌ Ошибка WebSocket ${index + 1}:`, error));
     ws.addEventListener("message", (event) => handleMessage(event.data));
     ws.addEventListener("close", () => handleClose(index, symbolsBatch));
