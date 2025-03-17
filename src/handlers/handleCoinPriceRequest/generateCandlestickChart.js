@@ -4,7 +4,7 @@ import {getCandleScale} from "../utils/getCandleScale.js";
 import {chartColors} from "../constants/chartColors.js";
 
 export async function generateChartURL(rawCandles) {
-  const candles = rawCandles.map(c => ({
+  const candles = rawCandles?.map(c => ({
     x: c[0],
     o: parseFloat(c[1]),
     h: parseFloat(c[2]),

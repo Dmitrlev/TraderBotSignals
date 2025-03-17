@@ -17,7 +17,7 @@ export const handleUpdateCallback = async (context) => {
                 return await getUndefinedCoinNotification(context, coinSymbol);
             }
 
-            const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData, interval, limit);
+            const [chartUrl, message, buttons] = await getSendData(coinSymbol, spotData, futuresData, null, interval, limit);
 
             await context.editMessageMedia({
                 type: 'photo',
@@ -29,7 +29,7 @@ export const handleUpdateCallback = async (context) => {
             });
 
         } catch (error) {
-            await getError(context, coinSymbol, error);
+            await getError(context, context?.chat?.id, coinSymbol, error);
         }
     }
 };

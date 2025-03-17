@@ -4,5 +4,5 @@ export const getError = async (context, chat_id, coinSymbol, error) => {
     return;
   }
 
-  console.error(`❌ Ошибка при получении данных для ${coinSymbol}: ${error.message}`);
+  console.error(`❌ Ошибка при получении данных для ${coinSymbol}: ${error}`);
 };
