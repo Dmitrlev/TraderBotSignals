@@ -10,15 +10,7 @@ export const getSendData = async (coinSymbol, spotData, futuresData, changePrice
     const chartUrl = await generateChartURL(resCandlestick);
     const message = formatCoinResponse({ coinSymbol, spotData, futuresData, changePriceSignal });
 
-    const buttons = Markup.inlineKeyboard([
-        generateButtons(coinSymbol),
-        [
-            Markup.button.url(
-                'Binance 🍌',
-                `http://docs.prime-auto.by/?coin=${coinSymbol}USDT`
-            )
-        ]
-    ]);
+    const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
     return [chartUrl, message, buttons];
 };
