@@ -1,4 +1,4 @@
-import {BOT_COMMANDS_DATA, MESSAGES_TEXT, VALID_CANDLES} from "./constants.js";
+import {BOT_COMMANDS_DATA, longPhrases, MESSAGES_TEXT, shortPhrases, VALID_CANDLES} from "./constants.js";
 import {saveSettings, SETTINGS} from "../../../settings.js";
 
 export const settingsHandler = (context) => {
@@ -16,11 +16,13 @@ export const settingsHandler = (context) => {
 }
 
 export const shortHandler = (context) => {
-    context.reply(`${MESSAGES_TEXT.shortText}`);
+    const randomIndex = Math.floor(Math.random() * longPhrases.length);
+    context.reply(`${longPhrases[randomIndex]}`);
 }
 
 export const longHandler = (context) => {
-    context.reply(`${MESSAGES_TEXT.longText}`);
+    const randomIndex = Math.floor(Math.random() * longPhrases.length);
+    context.reply(`${shortPhrases[randomIndex]}`);
 }
 
 export const handleSetInterval = (context) => {
