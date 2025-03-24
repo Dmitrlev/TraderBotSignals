@@ -3,7 +3,7 @@ import {getError} from "../utils/getError.js";
 import {getUndefinedCoinNotification} from "../utils/getUndefinedCoinNotification.js";
 import {getSendData} from "../utils/getSendData.js";
 import {getOpenAiResponse} from "../../api/openAiApi.js";
-import {sendAiAsTextFile} from "../../api/utils/generateFile.js";
+import {sendAiAsPdfFile} from "../../api/utils/generateFile.js";
 
 export const handleCoinPriceRequest = async (context, chat_id, symbol, changePriceSignal) => {
 
@@ -45,7 +45,7 @@ export const handleCoinPriceRequest = async (context, chat_id, symbol, changePri
         parse_mode: "MarkdownV2",
         ...buttons,
       }).then(() => {
-        sendAiAsTextFile(context, chat_id, aiMessage);
+        sendAiAsPdfFile(context, chat_id, aiMessage);
       });
 
     }).catch((error) => console.log(error));
