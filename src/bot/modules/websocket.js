@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import {fetchFuturesSymbols} from "../../services/binanceApi.js";
+import {fetchFuturesSymbols} from "../../api/binanceApi.js";
 import {handleCoinPriceRequest} from "../../handlers/handleCoinPriceRequest/handleCoinPriceRequest.js";
 import {SETTINGS} from "../../settings.js";
 

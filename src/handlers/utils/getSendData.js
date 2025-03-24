@@ -1,4 +1,4 @@
-import {getCandlestickData} from "../../services/binanceApi.js";
+import {getCandlestickData} from "../../api/binanceApi.js";
 import {candlestickParams} from "../constants/candlestick.js";
 import {generateChartURL} from "../handleCoinPriceRequest/generateCandlestickChart.js";
 import {formatCoinResponse} from "../handleCoinPriceRequest/formatResponse.js";
@@ -12,5 +12,5 @@ export const getSendData = async (coinSymbol, spotData, futuresData, changePrice
 
     const buttons = Markup.inlineKeyboard([generateButtons(coinSymbol)]);
 
-    return [chartUrl, message, buttons];
+    return [chartUrl, message, buttons, resCandlestick];
 };
