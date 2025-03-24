@@ -38,7 +38,7 @@ export const handleCoinPriceRequest = async (context, chat_id, symbol, changePri
       candlesData: resCandlestick,
     }
 
-    getOpenAiResponse(JSON.stringify(aiPrompt)).then((aiMessage) => {
+    getOpenAiResponse(JSON.stringify(aiPrompt), chartUrl).then((aiMessage) => {
       context.telegram.sendPhoto(chat_id, chartUrl, {
         caption: message,
         parse_mode: "MarkdownV2",
