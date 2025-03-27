@@ -93,3 +93,5 @@ dist
 .webpack/
 
 .svelte-kit
+
+settings.json
